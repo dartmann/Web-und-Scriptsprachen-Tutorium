@@ -1,0 +1,12 @@
+label {
+    cursor: default;
+    font-size: smaller;
+}
+
+.small-text {
+    font-size: smaller;
+}
+
+.button-text-large {
+    font-size: large;
+}
