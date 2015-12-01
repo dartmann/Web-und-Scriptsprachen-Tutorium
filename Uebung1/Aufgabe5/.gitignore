@@ -1,6 +1,7 @@
 ## Directory-based project format
 .idea/workspace.xml
 .idea/tasks.xml
+.idea/vcs.xml
 # and these sensitive or high-churn files:
 .idea/dataSources.ids
 .idea/dataSources.xml
