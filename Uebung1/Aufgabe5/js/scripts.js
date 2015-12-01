@@ -2,9 +2,12 @@
  * Created by david on 30.11.15.
  */
 window.onload = function() {
-    console.log('window ready');
+    //console.log('window ready');
 };
 
+/**
+ * Click method for the submit botton
+ */
 submitButtonClick = function () {
     var registrationRequest = {
         gender : document.getElementById('dropdown-gender').options[document.getElementById('dropdown-gender').selectedIndex].text,
@@ -15,6 +18,11 @@ submitButtonClick = function () {
         password2 : document.getElementById('input-password2').value
     };
 
+    /**
+     * Method to save the registrationRequest to the {@link localStorage}
+     * @param registrationRequest the given registrationRequest
+     * @return true if registration email is already used and false if otherwise
+     */
     function saveToLocalStorage(registrationRequest) {
         function checkLocalStorageForUser(registrationRequest) {
             var storageEntries = window.localStorage.length;
@@ -22,7 +30,6 @@ submitButtonClick = function () {
             for(var i = 0; i < storageEntries; i++) {
                 var obj = JSON.parse(window.localStorage.getItem(window.localStorage.key(i)));
                 if(obj.email === registrationRequest.email) {
-                    console.warn('Email: '+registrationRequest.email+' has already registered!');
                     return true;
                 }
             }
@@ -42,15 +49,16 @@ submitButtonClick = function () {
         registrationRequest.lastname &&
         registrationRequest.password &&
         registrationRequest.password2 &&
-        (registrationRequest.password.length == 6 && registrationRequest.password2.length == 6) &&
+        (registrationRequest.password.length >= 6 && registrationRequest.password2.length >= 6) &&
         (registrationRequest.password == registrationRequest.password2)) {
         if(window.localStorage !== 'undefined') {
-            saveToLocalStorage(registrationRequest);
+            if(saveToLocalStorage(registrationRequest)) {
+                console.warn('Email: '+registrationRequest.email+' has already registered!');
+            }
         } else {
-            console.warn('No LocalStorage Support!')
+            window.alert('No LocalStorage Support!')
         }
     } else {
-        console.warn('Daten nicht korrekt eingegeben!')
+        window.alert('Daten nicht korrekt eingegeben!')
     }
-    //console.log(registrationRequest);
 };
