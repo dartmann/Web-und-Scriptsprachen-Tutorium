@@ -2,26 +2,18 @@
  * Created by david on 08.12.15.
  */
 window.onload = function() {
-    test();
-    //requester.getJSON( 'http://www.url.tld', onResult);
+    //test();
+    xmlHttpRequester.getJSON( './json/daten.json');
 };
 
-function onResult(resultData) {
-    // do something with resultData
-    //alert(resultData);
-    var div = document.getElementById('wettervorhersage-wrapper');
-    //document.write(resultData.city);
-    console.log(resultData);
-}
-
-var requester = (function(){
+var xmlHttpRequester = (function(){
     return {
         getJSON: getJSON
     };
 
-    function getJSON(url, onResultCb) {
+    function getJSON(url) {
         var req = new XMLHttpRequest();
-        req.open('GET', 'http://api.openweathermap.org/data/2.5/forecast/city?q=Wuerzburg,de&lang=de&units=metric&APPID=d87b289c8ddf9b2759e3b3e075175f97');
+        req.open('GET', url);
         req.setRequestHeader('Accept', 'application/json');
         req.onreadystatechange = function() {
             if(req.readyState !== 4) {
@@ -31,7 +23,12 @@ var requester = (function(){
                 alert('Ein Fehler ist aufgetreten: ' + req.status + ' ' + req.statusText);
                 return;
             }
-            onResultCb( JSON.parse(req.responseText) );
+            var div = document.getElementById('wettervorhersage-wrapper');
+            var jsonArr = JSON.parse(req.responseText);
+            for(var i in jsonArr) {
+                div.innerHTML += jsonArr[i].email + "<br>";
+            }
+            console.log(req.responseText);
         };
         req.send(null);
     }
@@ -45,6 +42,7 @@ var requester = (function(){
  * https://developers.google.com/web/updates/2015/03/introduction-to-fetch
  */
 function test() {
+
     fetch('./json/daten.json')
         .then(
             function(response) {
@@ -56,12 +54,10 @@ function test() {
 
                 // Examine the text in the response
                 response.json().then(function(data) {
-                    //console.log(data);
                     var div = document.getElementById('wettervorhersage-wrapper');
                     for(var i in data) {
                         div.innerHTML += data[i].email + "<br>";
                     }
-                    //div.innerHTML += data;
                     console.log(data);
                 });
             }
@@ -69,4 +65,4 @@ function test() {
         .catch(function(err) {
             console.log('Fetch Error :-S', err);
     });
-}
+};
