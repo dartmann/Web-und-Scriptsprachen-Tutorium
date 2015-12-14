@@ -3,6 +3,17 @@
  */
 window.onload = function() {
     //console.log('window ready');
+    var div = document.getElementById('list-of-localstorage-elements');
+    if (localstorage.exists()) {
+        console.log('yes');
+        for (var i in window.localStorage.length) {
+
+        }
+    } else {
+        console.log('no');
+    }
+
+    div.innerHTML += '<p>Test</p>';
 };
 
 /**
@@ -19,11 +30,17 @@ submitButtonClick = function () {
     };
 
     /**
-     * Method to save the registrationRequest to the {@link localStorage}
+     * Method to save the registrationRequest to the {@link localStorage}.
      * @param registrationRequest the given registrationRequest
      * @return true if registration email is already used and false if otherwise
      */
     function saveToLocalStorage(registrationRequest) {
+
+        /**
+         * Method to check the store for an already registered user with his email address.
+         * @param registrationRequest
+         * @returns {boolean}
+         */
         function checkLocalStorageForUser(registrationRequest) {
             var storageEntries = window.localStorage.length;
             console.log('Anzahl der Storage Einträge: '+storageEntries);
@@ -44,6 +61,9 @@ submitButtonClick = function () {
         }
     }
 
+    /**
+     * Validation of the data.
+     */
     if (registrationRequest.gender &&
         registrationRequest.firstname &&
         registrationRequest.lastname &&
@@ -62,3 +82,26 @@ submitButtonClick = function () {
         window.alert('Daten nicht korrekt eingegeben!')
     }
 };
+
+/**
+ * Closure to check if {@link localStorage} is supported by the browser.
+ */
+var localstorage = (function() {
+
+    return {
+        exists: exists
+    };
+
+    function exists() {
+        //simplified checking of the underlying code
+        return window.localStorage !== 'undefined';
+        /**
+         * old overhead of checking
+         *
+        if(window.localStorage !== 'undefined' ? true : false;) {
+            return true;
+        }
+        return false;
+        */
+    }
+})();
