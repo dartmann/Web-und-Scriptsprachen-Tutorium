@@ -2,3 +2,4 @@
 Repo for the Tutorium of Web and Scriptlanguages
 
 [Uebung 1](https://github.com/dartmann/Web-und-Scriptsprachen-Tutorium/tree/master/Uebung1)
+[Uebung 2](https://github.com/dartmann/Web-und-Scriptsprachen-Tutorium/tree/master/Uebung2)
